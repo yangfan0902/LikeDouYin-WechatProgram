@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.imooc.enums.VideoStatusEnum;
 import com.imooc.pojo.Bgm;
+import com.imooc.pojo.Comments;
 import com.imooc.pojo.Users;
 import com.imooc.pojo.Videos;
 import com.imooc.service.BgmService;
@@ -201,6 +202,31 @@ public class VeidoController extends BasicController {
 		return IMoocJSONResult.ok(pagedResult);
 	}
 	
+	@PostMapping(value = "/showOnesAll")
+	public IMoocJSONResult showOnesAll (String userId,Integer page) {
+		if(page==null){
+			page=1;
+		}
+		PagedResult pagedResult=videoService.getOnesVideos(userId,page, PAGE_SIZE);
+		return IMoocJSONResult.ok(pagedResult);
+	}
+	@PostMapping(value = "/showOnesLike")
+	public IMoocJSONResult showOnesLike (String userId,Integer page) {
+		if(page==null){
+			page=1;
+		}
+		PagedResult pagedResult=videoService.getOnesLikeVideos(userId,page, PAGE_SIZE);
+		return IMoocJSONResult.ok(pagedResult);
+	}
+	@PostMapping(value = "/showOnesFollow")
+	public IMoocJSONResult showOnesFollow (String userId,Integer page) {
+		if(page==null){
+			page=1;
+		}
+		PagedResult pagedResult=videoService.getOnesFollowVideos(userId,page, PAGE_SIZE);
+		return IMoocJSONResult.ok(pagedResult);
+	}
+	
 	@PostMapping(value = "/hot")
 	public IMoocJSONResult hot() {
 		return IMoocJSONResult.ok(videoService.getHotWords());
@@ -216,6 +242,21 @@ public class VeidoController extends BasicController {
 	public IMoocJSONResult userUnLike(String userId,String videoId,String videoCreaterId) {
 		videoService.userUnLikeVideo(userId, videoId, videoCreaterId);
 		return IMoocJSONResult.ok();
+	}
+	
+	@PostMapping(value = "/saveComment")
+	public IMoocJSONResult saveComment(@RequestBody Comments comments) {
+		videoService.saveComment(comments);
+		return IMoocJSONResult.ok();
+	}
+	
+	@PostMapping(value = "/getVideoComments")
+	public IMoocJSONResult getVideoComments(String videoId,Integer page) {
+		if(page==null){
+			page=1;
+		}
+		PagedResult pagedResult=videoService.getVideoComments(videoId,page, PAGE_SIZE);
+		return IMoocJSONResult.ok(pagedResult);
 	}
 	
 	

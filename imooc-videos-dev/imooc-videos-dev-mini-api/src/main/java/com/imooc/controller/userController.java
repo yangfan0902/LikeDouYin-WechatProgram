@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.imooc.pojo.Users;
+import com.imooc.pojo.UsersReport;
 import com.imooc.pojo.vo.PublisherVideo;
 import com.imooc.pojo.vo.UsersVO;
 import com.imooc.service.UserService;
@@ -149,6 +150,20 @@ public class userController extends BasicController{
 		userService.deleteUserFanRelation(userId, fanId);
 
 		return IMoocJSONResult.ok("取消关注成功");
+		
+	
+	}
+	
+	/**
+	 * 举报
+	 * 
+	 */
+	@PostMapping("/reportUser")
+	public IMoocJSONResult reportUser(@RequestBody UsersReport usersReport){
+		
+		userService.reportUser(usersReport);
+		
+		return IMoocJSONResult.ok("举报成功，有你平带会变得更好~");
 		
 	
 	}

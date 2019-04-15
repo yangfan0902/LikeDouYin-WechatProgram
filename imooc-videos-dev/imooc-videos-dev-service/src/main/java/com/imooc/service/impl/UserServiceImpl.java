@@ -1,5 +1,6 @@
 package com.imooc.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,9 +16,11 @@ import tk.mybatis.mapper.entity.Example.Criteria;
 import com.imooc.mapper.UsersFansMapper;
 import com.imooc.mapper.UsersLikeVideosMapper;
 import com.imooc.mapper.UsersMapper;
+import com.imooc.mapper.UsersReportMapper;
 import com.imooc.pojo.Users;
 import com.imooc.pojo.UsersFans;
 import com.imooc.pojo.UsersLikeVideos;
+import com.imooc.pojo.UsersReport;
 import com.imooc.service.UserService;
 import com.imooc.utils.MD5Utils;
 
@@ -34,6 +37,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UsersFansMapper usersFansMapper;
+	
+	@Autowired
+	private UsersReportMapper usersReportMapper;
 	
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
@@ -119,6 +125,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteUserFanRelation(String userId, String fanId) {
 		Example example=new Example(UsersFans.class);
@@ -133,6 +140,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public boolean queryIfFollow(String userId, String fanId) {
 		Example example=new Example(UsersFans.class);
@@ -141,10 +149,22 @@ public class UserServiceImpl implements UserService {
 		criteria.andEqualTo("fanId", fanId);
 		
 		List<UsersFans> list=usersFansMapper.selectByExample(example);
-		if(list!=null&&list.size()>0){
+		if(list!=null&&list.size()>0){ 
 			return true;
 		}
 		return false;
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public void reportUser(UsersReport usersReport) {
+		String id=sid.nextShort();
+		Date date=new Date();
+		usersReport.setId(id);
+		usersReport.setCreateDate(date);
+		
+		usersReportMapper.insert(usersReport);
+		
 	}
 
 }

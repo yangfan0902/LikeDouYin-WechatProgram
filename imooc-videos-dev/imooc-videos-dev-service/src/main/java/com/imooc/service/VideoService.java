@@ -2,6 +2,7 @@ package com.imooc.service;
 
 import java.util.List;
 
+import com.imooc.pojo.Comments;
 import com.imooc.pojo.Videos;
 import com.imooc.utils.PagedResult;
 
@@ -31,4 +32,14 @@ public interface VideoService {
 	 * @param videoCreaterId
 	 */
 	public void userUnLikeVideo(String userId,String videoId,String videoCreaterId);
+
+	public PagedResult getOnesVideos(String userId,Integer page,Integer pageSize);
+	
+	public PagedResult getOnesLikeVideos(String userId,Integer page,Integer pageSize);
+	
+	public PagedResult getOnesFollowVideos(String userId,Integer page,Integer pageSize);
+	
+	public void saveComment(Comments comments);
+
+	public PagedResult getVideoComments(String videoId, Integer page, Integer pageSize);
 }

@@ -23,4 +23,10 @@ public interface VideosMapperCustom extends MyMapper<Videos> {
 	 * @param videoId
 	 */
 	public void reduceViedoLikeCount(String videoId);
+	
+	public List<VideosVO> queryOnesVideos(String userId);
+
+	public List<VideosVO> queryOnesLikeVideos(String userId);
+	
+	public List<VideosVO> queryOnesFollowVideos(String userId);
 }

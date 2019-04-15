@@ -1,6 +1,7 @@
 package com.imooc.service;
 
 import com.imooc.pojo.Users;
+import com.imooc.pojo.UsersReport;
 
 public interface UserService {
 	public boolean queryUsernameIsExist(String username);
@@ -26,4 +27,10 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean queryIfFollow(String userId,String fanId);
+	
+	/**
+	 * 举报
+	 * @param usersReport
+	 */
+	public void reportUser(UsersReport usersReport);
 }
