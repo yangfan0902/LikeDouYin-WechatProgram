@@ -245,7 +245,9 @@ public class VeidoController extends BasicController {
 	}
 	
 	@PostMapping(value = "/saveComment")
-	public IMoocJSONResult saveComment(@RequestBody Comments comments) {
+	public IMoocJSONResult saveComment(@RequestBody Comments comments,String fatherCommentId,String toUserId) {
+		comments.setFatherCommentId(fatherCommentId);
+		comments.setToUserId(toUserId);
 		videoService.saveComment(comments);
 		return IMoocJSONResult.ok();
 	}

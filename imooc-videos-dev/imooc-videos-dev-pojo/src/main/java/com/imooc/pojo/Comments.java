@@ -16,6 +16,12 @@ public class Comments {
     @Column(name = "create_time")
     private Date createTime;
 
+    @Column(name = "father_comment_id")
+    private String fatherCommentId;
+
+    @Column(name = "to_user_id")
+    private String toUserId;
+
     private String comment;
 
     /**
@@ -72,6 +78,34 @@ public class Comments {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * @return father_comment_id
+     */
+    public String getFatherCommentId() {
+        return fatherCommentId;
+    }
+
+    /**
+     * @param fatherCommentId
+     */
+    public void setFatherCommentId(String fatherCommentId) {
+        this.fatherCommentId = fatherCommentId;
+    }
+
+    /**
+     * @return to_user_id
+     */
+    public String getToUserId() {
+        return toUserId;
+    }
+
+    /**
+     * @param toUserId
+     */
+    public void setToUserId(String toUserId) {
+        this.toUserId = toUserId;
     }
 
     /**

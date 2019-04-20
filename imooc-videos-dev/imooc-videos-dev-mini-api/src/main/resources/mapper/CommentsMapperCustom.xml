@@ -16,7 +16,9 @@
   </resultMap>
   
   <select id="queryComments" parameterType="String" resultMap="BaseResultMap" >
-  	select c.*,u.face_image,u.nickname from comments c left join users u on c.from_user_id=u.id
+  	select c.*,u.face_image,u.nickname,tu.nickname  as toNickname from comments c 
+  	left join users u on c.from_user_id=u.id
+  	left join users tu on c.to_user_id=tu.id
 	where c.video_id=#{videoId}
   	order by c.create_time desc
   </select>
