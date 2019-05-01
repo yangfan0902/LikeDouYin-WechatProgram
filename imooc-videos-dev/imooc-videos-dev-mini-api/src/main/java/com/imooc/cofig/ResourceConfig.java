@@ -3,8 +3,9 @@ package com.imooc.cofig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 @ConfigurationProperties(prefix="com.imooc")
 @PropertySource("classpath:resource.properties")
 public class ResourceConfig {

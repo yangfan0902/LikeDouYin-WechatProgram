@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.imooc.cofig.ResourceConfig;
 import com.imooc.enums.BGMOperationTypeEnum;
 import com.imooc.pojo.Bgm;
 import com.imooc.service.BgmService;
@@ -32,13 +33,18 @@ public class ZKcuratorClient {
 	@Autowired
 	private BgmService bgmService;
 	
+	@Autowired
+	private ResourceConfig resourceConfig;
+	
 	//zk客户端
 	private CuratorFramework client=null;
 	final static Logger log=LoggerFactory.getLogger(ZKcuratorClient.class);
 	
-	public static final String zookeeper_server="192.168.91.128:2181";
+//	public static final String zookeeper_server="192.168.91.128:2181";
+	
 	
 	public void init(){
+		String zookeeper_server=resourceConfig.getZookeeperServer();
 		if(client !=null){
 			return;
 		}
@@ -91,7 +97,8 @@ public class ZKcuratorClient {
 //					}
 //					String songPath=bgm.getPath();
 					//2.定义保存到本地的bgm路径
-					String filePath="C:\\Users\\fan\\Desktop"+songPath;
+//					String filePath="C:\\Users\\fan\\Desktop"+songPath;
+					String filePath=resourceConfig.getFileSpace()+songPath;
 					
 					//3.定义下载的路径
 					String arrPath[]=songPath.split("\\\\");
@@ -103,7 +110,8 @@ public class ZKcuratorClient {
 							finalPath+=URLEncoder.encode(arrPath[i],"UTF-8");
 						}
 					}
-					String bgmUrl="http://localhost:8080/mvc"+finalPath;
+//					String bgmUrl="http://localhost:8080/mvc"+finalPath;
+					String bgmUrl=resourceConfig.getBgmServer()+finalPath;
 					
 					if(operatorType.equals(BGMOperationTypeEnum.ADD.type)){
 						
